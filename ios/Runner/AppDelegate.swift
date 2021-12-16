@@ -75,14 +75,13 @@ enum MyFlutterErrorCode {
     private func receiveBatteryLevel2() -> Int {
         let device = UIDevice.current
         device.isBatteryMonitoringEnabled = true
-        
         if device.batteryState == UIDevice.BatteryState.unknown {
             return -1
         } else {
             return Int(device.batteryLevel * 100)
         }
     }
-    
+
   private func receiveBatteryLevel(result: FlutterResult) {
     let device = UIDevice.current
     device.isBatteryMonitoringEnabled = true

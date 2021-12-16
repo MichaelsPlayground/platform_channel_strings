@@ -5,8 +5,9 @@ import UIKit
 import Flutter
 
 enum ChannelName {
-  static let battery = "samples.flutter.io/battery"
+  //static let battery = "samples.flutter.io/battery"
   static let charging = "samples.flutter.io/charging"
+    static let strings = "samples.flutter.io/strings"
 }
 
 enum BatteryState {
@@ -19,31 +20,61 @@ enum MyFlutterErrorCode {
 }
 
 @UIApplicationMain
-@objc class AppDelegate: FlutterAppDelegate, FlutterStreamHandler {
-  private var eventSink: FlutterEventSink?
+@objc class AppDelegate: FlutterAppDelegate{
+  
 
   override func application(
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    GeneratedPluginRegistrant.register(with: self)
-    guard let controller = window?.rootViewController as? FlutterViewController else {
-      fatalError("rootViewController is not type FlutterViewController")
-    }
         
-    // new Johannes Milke
-        let batteryChannel = FlutterMethodChannel(name: ChannelName.battery,
+        
+    
+    let controller = window?.rootViewController as! FlutterViewController
+        let stringChannel = FlutterMethodChannel(name: ChannelName.strings,
                                                   binaryMessenger: controller.binaryMessenger)
-        batteryChannel.setMethodCallHandler({
+        
+        GeneratedPluginRegistrant.register(with: self)
+        
+        
+        
+        /*
+        let stringsChannel = FlutterEventChannel(name: ChannelName.strings,
+                                                 binaryMessenger: controller.binaryMessenger)
+        stringsChannel.setMethodCallHandler({
             (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in switch call.method{
-            case "getBatteryLevel":
+            case "getReturnString":
                 guard let args = call.arguments as? [String: String] else {return}
                 let name = args["name"]!
-                result("\(name) says on IOS10 \(self.receiveBatteryLevel2())")
+                //result("\(name) says on IOS10 \(self.receiveBatteryLevel2())")
+                result("\(name) says on IOS10 gender")
             default:
                 result(FlutterMethodNotImplemented)
             }
             
         })
+        */
+        
+        
+    // new Johannes Milke
+        //let batteryChannel = FlutterMethodChannel(name: ChannelName.battery,
+        stringChannel.setMethodCallHandler({
+            (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in switch call.method{
+            case "getBatteryLevel":
+                guard let args = call.arguments as? [String: String] else {return}
+                let name = args["name"]!
+                result("\(name) ended")
+            case "getReturnString":
+                guard let args = call.arguments as? [String: String] else {return}
+                let name = args["name"]!
+                let gender = args["gender"]!
+                result("\(name) is on IOS10 \(gender)")
+            default:
+                result(FlutterMethodNotImplemented)
+            }
+            
+        })
+        
+        return super.application(application, didFinishLaunchingWithOptions: launchOptions)
         
     /* org
     let batteryChannel = FlutterMethodChannel(name: ChannelName.battery,
@@ -65,13 +96,14 @@ enum MyFlutterErrorCode {
     })
 */
         
-        
+/*
     let chargingChannel = FlutterEventChannel(name: ChannelName.charging,
                                               binaryMessenger: controller.binaryMessenger)
     chargingChannel.setStreamHandler(self)
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+ */
   }
-
+/*
     private func receiveBatteryLevel2() -> Int {
         let device = UIDevice.current
         device.isBatteryMonitoringEnabled = true
@@ -137,6 +169,7 @@ enum MyFlutterErrorCode {
     eventSink = nil
     return nil
   }
+*/
 }
 
 /*import UIKit

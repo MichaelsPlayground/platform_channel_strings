@@ -1,4 +1,8 @@
-# platform_channel_battery
+# platform_channel_strings
+
+Eine Abwandlung von platform_channel_battery, der platform code gibt einen zusammengesetzten String zurück
+
+Basis:
 
 code based on https://docs.flutter.dev/development/platform-integration/platform-channels?tab=type-mappings-java-tab
 
@@ -14,7 +18,14 @@ Johannes Milke SWIFT: https://www.youtube.com/watch?v=EHQTdB2qenU
 
 Funktioniert unter IOS nur auf einem "real device"
 
+/Users/michaelfehr/flutter/bin/flutter pub global activate rename
+/Users/michaelfehr/flutter/bin/flutter pub global run rename --bundleId com.example.platform_channel_strings
+/Users/michaelfehr/flutter/bin/flutter pub global run rename --appname "Platform Channel Strings"
+
+
 A new Flutter project.
+
+
 
 ## Getting Started
 

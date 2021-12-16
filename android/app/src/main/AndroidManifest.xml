@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.platform_channel_battery">
+    package="com.example.platform_channel_strings">
    <application
-        android:label="platform_channel_battery"
+        android:label="Platform Channel Strings"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

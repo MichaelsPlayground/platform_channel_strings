@@ -1,4 +1,4 @@
-package com.example.platform_channel_battery;
+package com.example.platform_channel_strings;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -28,10 +28,14 @@ import io.flutter.embedding.android.FlutterActivity;
 
 public class MainActivity extends FlutterActivity {
     private static final String BATTERY_CHANNEL = "samples.flutter.io/battery";
-    private static final String CHARGING_CHANNEL = "samples.flutter.io/charging";
+    //private static final String CHARGING_CHANNEL = "samples.flutter.io/charging";
+
+    private static final String STRINGS_CHANNEL = "samples.flutter.io/strings";
 
     @Override
     public void configureFlutterEngine(@NonNull FlutterEngine flutterEngine) {
+
+        /*
         new EventChannel(flutterEngine.getDartExecutor(), CHARGING_CHANNEL).setStreamHandler(
                 new StreamHandler() {
                     private BroadcastReceiver chargingStateChangeReceiver;
@@ -46,6 +50,37 @@ public class MainActivity extends FlutterActivity {
                     public void onCancel(Object arguments) {
                         unregisterReceiver(chargingStateChangeReceiver);
                         chargingStateChangeReceiver = null;
+                    }
+                }
+        );
+         */
+
+        new MethodChannel(flutterEngine.getDartExecutor(), STRINGS_CHANNEL).setMethodCallHandler(
+                new MethodCallHandler() {
+                    @Override
+                    public void onMethodCall(MethodCall call, Result result) {
+                        if (call.method.equals("getReturnString")) {
+                            // new
+                            Map<String, String> arguments = call.arguments();
+                            String name = arguments.get("name");
+                            String gender = arguments.get("gender");
+                            // end new
+
+                            String resultString = "";
+                            resultString = "newString: " + name + " is " + gender;
+                            //int batteryLevel = getBatteryLevel();
+
+                            result.success(resultString);
+                            /*
+                            if (batteryLevel != -1) {
+                                //result.success(batteryLevel);
+                                result.success(name + " says on Android: " + batteryLevel);
+                            } else {
+                                result.error("UNAVAILABLE", "Battery level not available.", null);
+                            }*/
+                        } else {
+                            result.notImplemented();
+                        }
                     }
                 }
         );
@@ -76,6 +111,7 @@ public class MainActivity extends FlutterActivity {
         );
     }
 
+    /*
     private BroadcastReceiver createChargingStateChangeReceiver(final EventSink events) {
         return new BroadcastReceiver() {
             @Override
@@ -92,6 +128,7 @@ public class MainActivity extends FlutterActivity {
             }
         };
     }
+     */
 
     private int getBatteryLevel() {
         if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {

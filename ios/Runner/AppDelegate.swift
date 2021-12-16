@@ -38,7 +38,7 @@ enum MyFlutterErrorCode {
             case "getBatteryLevel":
                 guard let args = call.arguments as? [String: String] else {return}
                 let name = args["name"]!
-                result("\(name) says on IOS \(self.receiveBatteryLevel2())")
+                result("\(name) says on IOS10 \(self.receiveBatteryLevel2())")
             default:
                 result(FlutterMethodNotImplemented)
             }

@@ -12,7 +12,7 @@ Johannes Milke Android: https://www.youtube.com/watch?v=j0cy_Z6IG_c
 
 Johannes Milke SWIFT: https://www.youtube.com/watch?v=EHQTdB2qenU
 
-
+Funktioniert unter IOS nur auf einem "real device"
 
 A new Flutter project.
 

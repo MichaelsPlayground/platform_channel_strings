@@ -29,6 +29,23 @@ enum MyFlutterErrorCode {
     guard let controller = window?.rootViewController as? FlutterViewController else {
       fatalError("rootViewController is not type FlutterViewController")
     }
+        
+    // new Johannes Milke
+        let batteryChannel = FlutterMethodChannel(name: ChannelName.battery,
+                                                  binaryMessenger: controller.binaryMessenger)
+        batteryChannel.setMethodCallHandler({
+            (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in switch call.method{
+            case "getBatteryLevel":
+                guard let args = call.arguments as? [String: String] else {return}
+                let name = args["name"]!
+                result("\(name) says on IOS \(self.receiveBatteryLevel2())")
+            default:
+                result(FlutterMethodNotImplemented)
+            }
+            
+        })
+        
+    /* org
     let batteryChannel = FlutterMethodChannel(name: ChannelName.battery,
                                               binaryMessenger: controller.binaryMessenger)
     batteryChannel.setMethodCallHandler({
@@ -37,22 +54,35 @@ enum MyFlutterErrorCode {
         result(FlutterMethodNotImplemented)
         return
       }
-        /*
+
         // new
         //let args = call.arguments as? [String: String]
         //let name = args["name"]!
         // end new
-         */
-        self?.receiveBatteryLevel(result: result)
-      //self?.receiveBatteryLevel(result: "\(name) says \result")
-    })
 
+        self?.receiveBatteryLevel(result: result)
+        //self?.receiveBatteryLevel(result: "\(name) says \result")
+    })
+*/
+        
+        
     let chargingChannel = FlutterEventChannel(name: ChannelName.charging,
                                               binaryMessenger: controller.binaryMessenger)
     chargingChannel.setStreamHandler(self)
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 
+    private func receiveBatteryLevel2() -> Int {
+        let device = UIDevice.current
+        device.isBatteryMonitoringEnabled = true
+        
+        if device.batteryState == UIDevice.BatteryState.unknown {
+            return -1
+        } else {
+            return Int(device.batteryLevel * 100)
+        }
+    }
+    
   private func receiveBatteryLevel(result: FlutterResult) {
     let device = UIDevice.current
     device.isBatteryMonitoringEnabled = true
@@ -64,6 +94,8 @@ enum MyFlutterErrorCode {
     }
     result(Int(device.batteryLevel * 100))
   }
+    
+    
 
   public func onListen(withArguments arguments: Any?,
                        eventSink: @escaping FlutterEventSink) -> FlutterError? {

@@ -64,7 +64,7 @@ public class MainActivity extends FlutterActivity {
 
                             if (batteryLevel != -1) {
                                 //result.success(batteryLevel);
-                                result.success(name + " says: " + batteryLevel);
+                                result.success(name + " says on Android: " + batteryLevel);
                             } else {
                                 result.error("UNAVAILABLE", "Battery level not available.", null);
                             }
